@@ -63,19 +63,35 @@ else
     echo "🐰 $service_account_name Service Account ($existing_service_account_email) already exists."
 fi
 
-# Continue with granting access and retrieving key
-# ... (previous steps)
+echo "🐰 Granting the Service Account access to your cluster..."
+# Grant Service Account access to the cluster
+gcloud projects add-iam-policy-binding "${project_id}" \
+    --member="serviceAccount:$service_account_name@${project_id}.iam.gserviceaccount.com" \
+    --role=roles/container.admin
 
+echo "🐰 Retrieving the Google Service Account Key..."
+# Create Google Service Account Key
+gcloud iam service-accounts keys create gsa-key.json \
+    --iam-account="$service_account_name@${project_id}.iam.gserviceaccount.com"
+
+# Download the Google Service Account Key
+echo "🐰 Downloading Google Service Account Key."
+gcloud iam service-accounts keys download gsa-key.json \
+    --iam-account="$service_account_name@$project_id.iam.gserviceaccount.com"
 # Display additional information
 current_context=$(kubectl config current-context)
 cloud_region=$(kubectl config get-contexts "$current_context" | awk '{print $3}' | tail -n 1)
 cluster_url=$(kubectl config view -o jsonpath="{.clusters[?(@.name==\"$current_context\")].cluster.server}")
-certificate=$(kubectl config view -o jsonpath="{.clusters[?(@.name==\"$current_context\")].cluster.certificate-authority-data}")
+certificate=$(kubectl config view --raw --minify --flatten -o jsonpath='{.clusters[].cluster.certificate-authority-data}')
+
 
 echo -e "\n🐰 Additional information:"
-echo "🐰 Cloud Region: $cloud_region"
+echo "🐰 GKE Cluster Name: $cluster_name_gcloud"
 echo "🐰 Cluster URL: $cluster_url"
-echo "🐰 Certificate: $certificate"
+echo "🐰 Cloud Region: $region"
+echo "🐰 Service Account ID: $service_account_name@$project_id.iam.gserviceaccount.com"
 echo "🐰 Project ID: $project_id"
+echo "🐰 Google Service Account Key: Copy the content of $(pwd)/gsa-key.json"
+echo "🐰 Certificate: $certificate"
 
 echo "🐰 Your GKE cluster is ready for action! 🚀🔧🔍"
