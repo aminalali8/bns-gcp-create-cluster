@@ -73,11 +73,6 @@ echo "🐰 Retrieving the Google Service Account Key..."
 gcloud iam service-accounts keys create gsa-key.json \
     --iam-account="$service_account_name@${project_id}.iam.gserviceaccount.com"
 
-# Download the Google Service Account Key
-echo "🐰 Downloading Google Service Account Key."
-gcloud iam service-accounts keys download gsa-key.json \
-    --iam-account="$service_account_name@$project_id.iam.gserviceaccount.com"
-
 # Display additional information
 current_context=$(kubectl config current-context)
 cloud_region=$(kubectl config get-contexts "$current_context" | awk '{print $3}' | tail -n 1)
