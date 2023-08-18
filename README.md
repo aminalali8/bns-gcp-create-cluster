@@ -37,3 +37,7 @@ Please note that running the cleanup script will irreversibly delete the GKE clu
 
 After running the script, your GKE cluster will be ready for action! The script will also provide you with essential information such as the Cloud Region, Cluster URL, Certificate, and Project ID.
 
+
+# TODO 
+- [ ] Add PVs storage classes
+- Apply load balancer 
