@@ -76,10 +76,15 @@ echo "🐰 Getting cluster configuration..."
 # Get cluster credentials for kubectl
 gcloud container clusters get-credentials "$cluster_name" --region "$region" --project "$(gcloud config get-value project)"
 
-echo "🐰 Retrieving the Service Account..."
-# Create the Service Account
-read -p "🐰 Enter a name for the Service Account: " service_account_name
-gcloud iam service-accounts create "$service_account_name"
+echo "🐰 Retrieving the Bunnyshell Service Account..."
+# Check if BunnyShell service account already exists
+service_account_name="bunnyshell-access"
+if ! gcloud iam service-accounts list --filter="email:bunnyshell-access@$(gcloud config get-value project).iam.gserviceaccount.com" --format="value(email)" &>/dev/null; then
+    echo "🐰 Creating the BunnyShell Service Account..."
+    gcloud iam service-accounts create "$service_account_name"
+else
+    echo "🐰 BunnyShell Service Account ($existing_service_account_email) already exists."
+fi
 
 echo "🐰 Granting the Service Account access to your cluster..."
 # Grant Service Account access to the cluster
