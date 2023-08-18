@@ -24,6 +24,16 @@ The script will guide you through the setup process interactively. It will promp
 4. Service Account setup: The script will create a Service Account and grant it access to your GKE cluster.
 5. Additional Information: The script will display the Cloud Region, Cluster URL, Certificate, and Project ID.
 
+## Cleanup Script
+
+This repository also includes a cleanup script (`cleanup.sh`) that allows you to delete all the resources created by the main script:
+
+1. Run the script `cleanup.sh`.
+2. Follow the prompts to confirm the deletion of resources.
+
+Please note that running the cleanup script will irreversibly delete the GKE cluster, Service Account, and related resources. Use it with caution.
+
 ## Additional Information
 
 After running the script, your GKE cluster will be ready for action! The script will also provide you with essential information such as the Cloud Region, Cluster URL, Certificate, and Project ID.
+
