@@ -45,9 +45,10 @@ gcloud services enable container.googleapis.com
 read -p "🐰 Enter a name for your GKE cluster: " cluster_name
 read -p "🐰 Enter the region for your GKE cluster (e.g., us-central1): " region
 read -p "🐰 Enter the desired node size for your GKE cluster (e.g., n1-standard-2): " node_size
+read -p "Enter the kubernetes cluster version: (use the command gcloud container get-server-config --region <REGION> to get possible values)" kubernetes_version
 
 echo "🐰 Creating a GKE cluster..."
-gcloud container clusters create "$cluster_name" --region "$region" --machine-type "$node_size"
+gcloud container clusters create "$cluster_name" --region "$region" --machine-type "$node_size" --cluster-version "$kubernetes_version"
 
 
 echo "🐰 Retrieving the Service Account..."
