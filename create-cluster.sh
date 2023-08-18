@@ -66,10 +66,11 @@ fi
 # Input cluster name and region
 read -p "🐰 Enter a name for your GKE cluster: " cluster_name
 read -p "🐰 Enter the region for your GKE cluster (e.g., us-central1): " region
+read -p "🐰 Enter the desired node size for your GKE cluster (e.g., n1-standard-2): " node_size
 
 echo "🐰 Creating a GKE cluster..."
-# Tell GKE to create the cluster
-gcloud container clusters create "$cluster_name" --region "$region"
+# Tell GKE to create the cluster with the specified node size
+gcloud container clusters create "$cluster_name" --region "$region" --machine-type "$node_size"
 
 echo "🐰 Getting cluster configuration..."
 # Get cluster credentials for kubectl

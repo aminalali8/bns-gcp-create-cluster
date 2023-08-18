@@ -20,7 +20,7 @@ The script will guide you through the setup process interactively. It will promp
 
 1. Google Cloud project configuration: You can either use the preset configuration or create a new project.
 2. Enabling the Containers API: If not already enabled, you'll be prompted to enable it.
-3. GKE cluster details: Name and region for your GKE cluster.
+3. GKE cluster details: Name, region, and node size for your GKE cluster.
 4. Service Account setup: The script will create a Service Account and grant it access to your GKE cluster.
 5. Additional Information: The script will display the Cloud Region, Cluster URL, Certificate, and Project ID.
 
